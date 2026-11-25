@@ -883,18 +883,17 @@ def label_nama(img, nama, cx, y):
     d.text((cx, y), nama.upper(), font=f, fill=(30, 30, 36), anchor="mm")
 
 
-# ================================================================ subtitle kata demi kata
+# ================================================================ subtitle ringkas, dua baris, karaoke per kata
 SUB_CY = 840
 
 
 def kelompok(kata):
-    """Kelompokkan subtitle menjadi frasa yang bisa dibaca, bukan 1-2 kata terputus."""
+    """Kelompokkan frasa alami: maksimal 8 kata / 58 karakter, putus di tanda baca."""
     out, cur = [], []
     for i, (_, _, k) in enumerate(kata):
         teks_cur = " ".join(kata[j][2] for j in cur)
         calon = (teks_cur + " " + k).strip()
-        # Maksimal 5 kata / 34 karakter; akhiri setelah tanda baca agar frasa tetap utuh.
-        if cur and (len(cur) >= 5 or len(calon) > 34 or kata[cur[-1]][2][-1:] in ".?!;:"):
+        if cur and (len(cur) >= 8 or len(calon) > 58 or kata[cur[-1]][2][-1:] in ".?!;:"):
             out.append(cur)
             cur = []
         cur.append(i)
@@ -904,6 +903,7 @@ def kelompok(kata):
 
 
 class Subtitle:
+    """Subtitle lebih kecil; dua baris seimbang, aman dari tepi layar."""
     def __init__(self, kata):
         self.kata = kata
         self.chunks = kelompok(kata)
@@ -918,22 +918,40 @@ class Subtitle:
             return self.cache[key]
         idx = self.chunks[n]
         teks = [self.kata[i][2] for i in idx]
-        ukuran = 76
-        while True:
-            f = font(FONT, ukuran)
-            lebar = [f.getlength(t) for t in teks]
-            spasi = f.getlength(" ")
-            total = sum(lebar) + spasi * (len(teks) - 1)
-            if total <= 640 or ukuran <= 44:
-                break
-            ukuran -= 4
-        im = Image.new("RGBA", (W, 170), (0, 0, 0, 0))
+        ukuran = 46
+        f = font(FONT, ukuran)
+        # Bagi kata ke maksimal dua baris dengan lebar seimbang.
+        baris, cur, lebar_cur = [], [], 0
+        for t in teks:
+            w = f.getlength(t)
+            calon = lebar_cur + (f.getlength(" ") if cur else 0) + w
+            if cur and calon > 610 and len(baris) == 0:
+                baris.append(cur); cur = [t]; lebar_cur = w
+            else:
+                cur.append(t); lebar_cur = calon
+        if cur: baris.append(cur)
+        if len(baris) > 2:
+            # Fallback defensif: ukuran lebih kecil agar tetap muat dua baris.
+            ukuran = 40; f = font(FONT, ukuran)
+            baris = [teks[:(len(teks)+1)//2], teks[(len(teks)+1)//2:]]
+        tinggi = 116
+        im = Image.new("RGBA", (W, tinggi), (0, 0, 0, 0))
         d = ImageDraw.Draw(im)
-        x = (W - total) / 2
-        for i, t, lb in zip(idx, teks, lebar):
-            warna = (255, 196, 40) if i == aktif else (255, 255, 255)
-            d.text((x, 85), t, font=f, fill=warna, anchor="lm", stroke_width=9, stroke_fill=(0, 0, 0))
-            x += lb + spasi
+        line_h = 48
+        y0 = (tinggi - len(baris)*line_h)//2 + 2
+        # Pita gelap tipis meningkatkan keterbacaan tanpa menutup adegan.
+        for li, row in enumerate(baris[:2]):
+            widths = [f.getlength(t) for t in row]
+            gap = f.getlength(" ")
+            total = sum(widths) + gap * (len(row)-1)
+            x = (W-total)/2
+            y = y0 + li*line_h
+            for j, (t, wid) in enumerate(zip(row, widths)):
+                # Indeks kata asli dipakai untuk highlight karaoke.
+                global_idx = idx[sum(len(x) for x in baris[:li]) + j]
+                warna = (255, 205, 70) if global_idx == aktif else (255, 255, 255)
+                d.text((x, y), t, font=f, fill=warna, anchor="lm", stroke_width=5, stroke_fill=(0,0,0,235))
+                x += wid + gap
         self.cache[key] = im
         return im
 
@@ -945,9 +963,9 @@ class Subtitle:
             return None
         im = self.sprite(self.chunk_of[i], i)
         umur = t - self.mulai[i]
-        if umur < 0.12:
-            k = 1.18 - 0.18 * (umur / 0.12)
-            im = im.resize((int(im.width * k), int(im.height * k)), Image.BILINEAR)
+        if umur < 0.10:
+            k = 1.04 - 0.04 * (umur / 0.10)
+            im = im.resize((int(im.width*k), int(im.height*k)), Image.BILINEAR)
         return im
 
 
@@ -1143,7 +1161,7 @@ class Adegan:
                 naik = 6 * math.sin(t * 2 * math.pi * .9)
                 d.ellipse([360 - 380, 1080 + naik, 360 + 380, 1500], fill=bahu, outline=gelap(bahu, .5), width=6)
                 hi = kar.kepala_hi(emosi, mulut, kedip and emosi != "seram")
-                skala = (3.5 if shot == "closeup" else 3.6) * (1 + .02 * prog) * kz
+                skala = (2.85 if shot == "closeup" else 2.95) * (1 + .02 * prog) * kz
                 tw, th = int(HW * skala), int(HH * skala)
                 kep = hi.resize((tw, th), Image.BILINEAR)
                 sdt = 1.8 * math.sin(t * 2 * math.pi * .7) + e * 3 * math.sin(t * 2 * math.pi * 2.1)
