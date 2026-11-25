@@ -275,7 +275,7 @@ ALUR KHAS (wajib diikuti urutannya):
 {alur_genre(genre, part, total)}
 
 ATURAN NARASI:
-- Total narasi 140-180 kata, 14-18 adegan. Satu adegan = satu kalimat (maks 14 kata). Setiap adegan harus punya sebab-akibat dan mengubah keadaan cerita; jangan mengulang informasi. Irama seperti ini: {' / '.join(CONTOH[:6])}
+- Total narasi 170-210 kata, 18-22 adegan. Satu adegan = satu kalimat utuh (maks 13 kata), bukan potongan frasa. Setiap adegan harus punya sebab-akibat dan mengubah keadaan cerita; jangan mengulang informasi. Pastikan ada pembuka, pengenalan tokoh/lokasi, pemicu masalah, usaha pertama, kegagalan, petunjuk/bukti, keputusan, klimaks, akibat, dan cliffhanger. Irama seperti ini: {' / '.join(CONTOH[:6])}
 - DIALOG: {dialog} Suara tiap tokoh dibedakan otomatis berdasarkan gender dan usia (nenek, kakek, anak, pria, wanita), jadi pembicara harus jelas.
 - PEMBAGIAN SUARA: adegan penceritaan = kalimat narator (isi "bicara" dengan narator bila ia tampil di layar, kosongkan bila tidak). Adegan dialog = HANYA kata-kata tokoh itu sendiri, tanpa "katanya"/"ujar", tanpa tanda kutip, dan "bicara" wajib diisi nama pembicara. Tokoh tua ("nenek", "kakek", "Bu", "Pak" sepuh) wajib usia "tua"; anak kecil usia "anak".
 - Campur penceritaan dan dialog secara bergantian, jangan semua dialog atau semua penceritaan.
@@ -292,10 +292,10 @@ ATURAN VISUAL (tiap adegan pilih dari daftar ini saja):
 - pose tokoh: berdiri, duduk (di meja dapur / sofa ruang_tamu / meja kantor / di kasur), tidur (hanya di kamar; maks 2 orang)
 - emosi: {', '.join(EMOSI)} ({'seram = mata menyala, hanya untuk sosok hantu/kerasukan' if genre not in TANPA_SERAM else 'pakai kaget/marah/senang/sedih/takut sesuai cerita; jangan pakai seram'})
 - efek (opsional, hemat): getar (gemetar), kedip (lampu berkedip), glitch (gangguan gambar, cocok di cctv), kejut (kilatan + dentuman, pakai maks 2 kali, untuk twist/punchline)
-- KONTINUITAS WAJIB: setiap adegan dimulai dari akibat adegan sebelumnya. Urutan harus jelas: pemicu -> reaksi -> keputusan -> tindakan -> bukti -> konsekuensi -> cliffhanger. Jangan pindah lokasi tanpa alasan yang disebutkan. Jam, posisi benda, pakaian, dan siapa yang ada di ruangan harus konsisten. Setiap adegan harus menunjukkan tindakan konkret, bukan hanya tokoh berdiri diam.
+- KONTINUITAS WAJIB: setiap adegan dimulai dari akibat adegan sebelumnya. Urutan wajib: pembuka -> pengenalan -> pemicu -> reaksi -> keputusan -> tindakan -> bukti -> hambatan -> klimaks -> konsekuensi -> cliffhanger. Jangan melompat dari pengenalan langsung ke twist. Benda penting harus diperkenalkan sebelum dipakai dan hasil tindakan harus terlihat di adegan berikutnya. Jangan pindah lokasi tanpa alasan yang disebutkan. Jam, posisi benda, pakaian, dan siapa yang ada di ruangan harus konsisten. Setiap adegan harus menunjukkan tindakan konkret, bukan hanya tokoh berdiri diam.
 - PROPERTI: isi "properti" dengan 0-3 benda yang benar-benar disentuh/dilihat/digunakan pada adegan itu. Nama benda pilih dari: kamera_cctv, ponsel, jam_digital, boneka_teddy, boneka_kelinci, kotak_paket, kunci, senter, foto, gelas, buku_catatan, pintu, payung_merah, kamera_foto, surat, amplop, sisir_kayu, tiket, radio, interkom, peta, denah, koper, mesin_jahit, gamelan, gong, lampu, lentera. Posisi pilih kiri/kanan/tengah. Benda yang diperkenalkan harus tetap konsisten di adegan berikutnya bila masih dipakai. Jangan menampilkan properti yang tidak disebut atau tidak masuk akal untuk adegan.
 - AKSI TOKOH: setiap objek tokoh wajib punya "aksi" singkat yang bisa digambar: diam, berjalan, menunjuk, memegang_hp, memegang_benda, menutup_mulut, meraih, melambai, gemetar, menoleh, tidur. Pilih sesuai narasi; jangan semua berdiri menghadap kamera.
-- DETAIL ADEGAN: jelaskan "aksi" tingkat adegan dalam 4-12 kata. Setiap adegan harus memvisualkan kata kerja yang benar-benar terjadi: membuka, mengangkat, menjatuhkan, menyembunyikan, berlari, mengunci, menoleh, dll. Jangan hanya mengganti ekspresi.
+- DETAIL ADEGAN: jelaskan "aksi" tingkat adegan dalam 5-14 kata. Setiap adegan wajib memperagakan kata kerja yang benar-benar terjadi, bukan hanya mengulang narasi. Contoh: "Reno menarik gagang pintu, lalu mundur ketika pintu terkunci sendiri". Tokoh yang melakukan tindakan wajib tampak di layar, kecuali shot CCTV/bukti tanpa tokoh memang disengaja. Jangan biarkan tokoh utama hilang dari sebagian besar adegan. Setiap adegan harus memvisualkan kata kerja yang benar-benar terjadi: membuka, mengangkat, menjatuhkan, menyembunyikan, berlari, mengunci, menoleh, dll. Jangan hanya mengganti ekspresi.
 - LATAR KONTEKSTUAL: pilih lokasi paling spesifik dan cocok dengan tindakan di adegan itu. Jika cerita menyebut paket datang, tampilkan teras/ruang tamu saat paket diterima; saat dibuka pindah ke meja/ruang yang sama; saat malam gunakan kamar_malam/lorong. Jangan memakai kamar_malam untuk semua adegan. Pertahankan lokasi sampai ada alasan tokoh berpindah.
 - SUARA PER ADEGAN: isi "cara_bicara" dengan salah satu: natural, berbisik, panik, teriak, menangis, tenang. Gunakan natural sebagai default. Berbisik untuk rahasia/ancaman dekat, panik untuk napas terburu-buru, teriak hanya pada momen kaget/ancaman, menangis saat sedih, tenang untuk pengakuan. Jangan membuat semua adegan horor berbisik atau berteriak.
 - SUASANA AUDIO: isi "suasana" dengan salah satu: sunyi, angin, hujan, dengung, ramai, kereta, mesin, api. Pilih sesuai lokasi dan kejadian: kereta untuk gerbong, mesin untuk alat/teknologi, api untuk gunung atau lentera, ramai untuk pesta/warung, angin untuk bukit/menara, dengung untuk lift/listrik, hujan saat hujan, sunyi untuk momen tegang. Hindari suasana yang tidak sesuai visual.
@@ -327,6 +327,44 @@ def _rapikan_tokoh(t):
                 aksesori=t.get("aksesori") if t.get("aksesori") in ("kalung", "anting", "topi", "jam_tangan") else "")
 
 
+def _petakan_visual(narasi, aksi, properti):
+    """Lengkapi petunjuk visual yang terlewat tanpa menambah benda yang tidak disebut cerita."""
+    teks = (str(narasi or "") + " " + str(aksi or "")).lower()
+    aksi_tk = "diam"
+    aturan_aksi = [
+        (("berlari", "lari", "bergegas", "kabur", "mengejar", "berjalan", "melangkah", "mendekat", "pergi", "masuk", "keluar"), "berjalan"),
+        (("menunjuk", "mengarah"), "menunjuk"),
+        (("menutup mulut", "membekap mulut"), "menutup_mulut"),
+        (("menoleh", "berbalik", "melihat ke belakang"), "menoleh"),
+        (("gemetar", "menggigil", "ketakutan"), "gemetar"),
+        (("mengambil", "meraih", "mengetuk", "menarik", "membuka", "membuka", "mengunci"), "meraih"),
+        (("ponsel", "telepon", "hp", "handphone"), "memegang_hp"),
+        (("memegang", "mengangkat", "membawa", "menarik", "mendorong", "membuka", "buka pintu", "menutup", "mengunci", "mengetuk"), "memegang_benda"),
+    ]
+    for keys, result in aturan_aksi:
+        if any(k in teks for k in keys):
+            aksi_tk = result
+            break
+    peta = [
+        (("pintu", "gagang pintu"), "pintu"), (("ponsel", "telepon", "hp", "handphone", "pesan", "chat"), "ponsel"),
+        (("jam", "pukul", "03.17", "02.13"), "jam_digital"), (("kamera cctv", "cctv", "rekaman"), "kamera_cctv"),
+        (("boneka teddy", "boneka beruang", "boneka"), "boneka_teddy"), (("kotak paket", "paket", "kardus", "kiriman"), "kotak_paket"),
+        (("kunci", "anak kunci"), "kunci"), (("senter", "sorot lampu"), "senter"),
+        (("foto", "fotografi", "kartu memori"), "foto"), (("kamera",), "kamera_foto"),
+        (("surat",), "surat"), (("amplop",), "amplop"), (("sisir",), "sisir_kayu"), (("tiket",), "tiket"),
+        (("radio",), "radio"), (("interkom",), "interkom"), (("peta", "denah"), "denah"), (("koper",), "koper"),
+        (("mesin jahit",), "mesin_jahit"), (("gamelan",), "gamelan"), (("gong",), "gong"), (("lentera",), "lentera"),
+        (("payung merah", "payung"), "payung_merah"), (("gelas", "cangkir"), "gelas"), (("buku catatan", "catatan"), "buku_catatan"),
+    ]
+    names = [x.get("nama") for x in properti if isinstance(x, dict)]
+    for keys, name in peta:
+        if any(k in teks for k in keys) and name not in names:
+            names.append(name)
+        if len(names) >= 3:
+            break
+    return aksi_tk, [{"nama": n, "posisi": ("kiri", "tengah", "kanan")[i % 3]} for i, n in enumerate(names[:3])]
+
+
 def validasi(data, st_seri, part, cek_kata=True, genre="horor"):
     """Rapikan keluaran model supaya tidak pernah membuat render error."""
     cast = {t["nama"]: t for t in st_seri.get("tokoh", [])}
@@ -338,7 +376,7 @@ def validasi(data, st_seri, part, cek_kata=True, genre="horor"):
     assert cast, "tokoh kosong"
     narator = _nama_cocok(data.get("narator") or st_seri.get("narator") or "", cast) or next(iter(cast))
     bagian = data.get("bagian") or []
-    assert len(bagian) >= 12, "adegan terlalu sedikit: minimal 12 adegan agar alur tidak terasa lompat"
+    assert len(bagian) >= 16, f"adegan terlalu sedikit ({len(bagian)}); minimal 16 adegan agar alur lengkap"
     out = []
     for b in bagian[:24]:
         narasi = re.sub(r"\s+", " ", str(b.get("narasi", "")).replace('"', "").replace("\u201c", "").replace("\u201d", "")).strip()
@@ -388,7 +426,16 @@ def validasi(data, st_seri, part, cek_kata=True, genre="horor"):
                 pr = {"nama": pr}
             if isinstance(pr, dict) and pr.get("nama") in daftar_properti:
                 properti.append({"nama": pr["nama"], "posisi": pr.get("posisi") if pr.get("posisi") in ("kiri", "kanan", "tengah") else "kanan"})
-        aksi_adegan = re.sub(r"\s+", " ", str(b.get("aksi") or "")).strip()[:120]
+        aksi_adegan = re.sub(r"\s+", " ", str(b.get("aksi") or "")).strip()[:160]
+        aksi_infer, properti_infer = _petakan_visual(narasi, aksi_adegan, properti)
+        properti = properti_infer
+        # Jangan biarkan frame kosong saat adegan menceritakan tindakan tokoh.
+        if not tokoh and shot not in ("cctv", "cctv_zoom"):
+            teks_visual = (narasi + " " + aksi_adegan).lower()
+            emosi_default = "takut" if any(k in teks_visual for k in ("takut", "panik", "aneh", "gelap", "suara", "hantu")) else "netral"
+            tokoh = [dict(nama=narator, pose="berdiri", emosi=emosi_default, aksi=aksi_infer)]
+        elif tokoh and all(t.get("aksi") == "diam" for t in tokoh):
+            tokoh[0]["aksi"] = aksi_infer
         cara = b.get("cara_bicara") if b.get("cara_bicara") in ("natural", "berbisik", "panik", "teriak", "menangis", "tenang") else "natural"
         suasana = b.get("suasana") if b.get("suasana") in ("sunyi", "angin", "hujan", "dengung", "ramai", "kereta", "mesin", "api") else ("dengung" if shot in ("cctv", "cctv_zoom") else "sunyi")
         item = dict(narasi=narasi, latar=latar, shot=shot, tokoh=tokoh, bicara=bicara,
@@ -402,7 +449,7 @@ def validasi(data, st_seri, part, cek_kata=True, genre="horor"):
             item["cctv"] = dict(jam=jam, kecepatan=kec)
         out.append(item)
     kata = sum(len(b["narasi"].split()) for b in out)
-    assert not cek_kata or 120 <= kata <= 240, f"jumlah kata aneh: {kata}"
+    assert not cek_kata or 150 <= kata <= 240, f"jumlah kata tidak cukup untuk alur lengkap: {kata}"
     ka = data.get("kartu_akhir") if isinstance(data.get("kartu_akhir"), dict) else {}
     waktu = str(ka.get("waktu", ""))
     waktu = waktu if re.fullmatch(r"\d{1,2}:\d{2}:\d{2}", waktu) else "02:13:00"
