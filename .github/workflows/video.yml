@@ -44,7 +44,7 @@ jobs:
           UPLOAD: "0"                  # ganti "1" setelah tiga secret YouTube diisi
           SIMPAN_KEMAJUAN: "1"         # seri tetap maju ke part berikutnya
           YT_PRIVACY: private
-          KANAL: BISIK TIGA PAGI       # nama akunmu di pojok kiri atas video; kosongkan ("") untuk tanpa tulisan
+          KANAL: BISIK       # nama akunmu di pojok kiri atas video; kosongkan ("") untuk tanpa tulisan
           FONT_PATH: fonts/Poppins-Bold.ttf
           MENANG: ${{ inputs.menang }} # diisi saat Run workflow manual (hasil voting)
         run: python main.py
