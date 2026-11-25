@@ -888,13 +888,15 @@ SUB_CY = 840
 
 
 def kelompok(kata):
+    """Kelompokkan subtitle menjadi frasa yang bisa dibaca, bukan 1-2 kata terputus."""
     out, cur = [], []
     for i, (_, _, k) in enumerate(kata):
-        if cur:
-            huruf = sum(len(kata[j][2]) for j in cur) + len(cur) + len(k)
-            if len(cur) >= 3 or huruf > 15 or kata[cur[-1]][2][-1:] in ",.?!;:":
-                out.append(cur)
-                cur = []
+        teks_cur = " ".join(kata[j][2] for j in cur)
+        calon = (teks_cur + " " + k).strip()
+        # Maksimal 5 kata / 34 karakter; akhiri setelah tanda baca agar frasa tetap utuh.
+        if cur and (len(cur) >= 5 or len(calon) > 34 or kata[cur[-1]][2][-1:] in ".?!;:"):
+            out.append(cur)
+            cur = []
         cur.append(i)
     if cur:
         out.append(cur)
@@ -969,11 +971,13 @@ def gambar_properti(img, daftar, t=0.0):
     if not daftar:
         return
     d = ImageDraw.Draw(img)
-    posisi = {"kiri": (112, 830), "tengah": (360, 830), "kanan": (608, 830)}
+    posisi = {"kiri": (105, 1035), "tengah": (360, 1045), "kanan": (615, 1035)}
     for idx, item in enumerate(daftar[:3]):
         nama = item.get("nama") if isinstance(item, dict) else str(item)
-        x, y = posisi.get(item.get("posisi", "kanan") if isinstance(item, dict) else "kanan", (608, 830))
+        x, y = posisi.get(item.get("posisi", "kanan") if isinstance(item, dict) else "kanan", (615, 1035))
         y += int(3 * math.sin(t * 2.4 + idx))
+        # Alas kecil membuat properti terlihat, tanpa menutupi subtitle.
+        d.rounded_rectangle((x-72, y-72, x+72, y+76), radius=18, fill=(10, 12, 18))
         outline = (24, 24, 32)
         if nama == "kamera_cctv":
             d.rounded_rectangle((x-54,y-28,x+42,y+22), radius=10, fill=(45,52,66), outline=(12,14,20), width=4)
@@ -1191,6 +1195,8 @@ class Adegan:
                     else:
                         yf = (bgd["lantai"] - y0) * z
                     sx = (xw - x0) * z
+                    if tk.get("aksi") == "berjalan":
+                        sx += 10 * math.sin(t * 8.0 + (z * .3))
                     pop = 1.0
                     if t < .35:
                         u = t / .35
