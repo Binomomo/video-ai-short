@@ -275,7 +275,7 @@ ALUR KHAS (wajib diikuti urutannya):
 {alur_genre(genre, part, total)}
 
 ATURAN NARASI:
-- Total narasi 170-210 kata, 18-22 adegan. Satu adegan = satu kalimat utuh (maks 13 kata), bukan potongan frasa. Setiap adegan harus punya sebab-akibat dan mengubah keadaan cerita; jangan mengulang informasi. Pastikan ada pembuka, pengenalan tokoh/lokasi, pemicu masalah, usaha pertama, kegagalan, petunjuk/bukti, keputusan, klimaks, akibat, dan cliffhanger. Irama seperti ini: {' / '.join(CONTOH[:6])}
+- Total narasi 135-165 kata, 16-20 adegan. Satu adegan = satu kalimat utuh (maks 11 kata), bukan potongan frasa. Setiap adegan harus punya sebab-akibat dan mengubah keadaan cerita; jangan mengulang informasi. Pastikan ada pembuka, pengenalan tokoh/lokasi, pemicu masalah, usaha pertama, kegagalan, petunjuk/bukti, keputusan, klimaks, akibat, dan cliffhanger. Irama seperti ini: {' / '.join(CONTOH[:6])}
 - DIALOG: {dialog} Suara tiap tokoh dibedakan otomatis berdasarkan gender dan usia (nenek, kakek, anak, pria, wanita), jadi pembicara harus jelas.
 - PEMBAGIAN SUARA: adegan penceritaan = kalimat narator (isi "bicara" dengan narator bila ia tampil di layar, kosongkan bila tidak). Adegan dialog = HANYA kata-kata tokoh itu sendiri, tanpa "katanya"/"ujar", tanpa tanda kutip, dan "bicara" wajib diisi nama pembicara. Tokoh tua ("nenek", "kakek", "Bu", "Pak" sepuh) wajib usia "tua"; anak kecil usia "anak".
 - Campur penceritaan dan dialog secara bergantian, jangan semua dialog atau semua penceritaan.
@@ -449,7 +449,7 @@ def validasi(data, st_seri, part, cek_kata=True, genre="horor"):
             item["cctv"] = dict(jam=jam, kecepatan=kec)
         out.append(item)
     kata = sum(len(b["narasi"].split()) for b in out)
-    assert not cek_kata or 150 <= kata <= 240, f"jumlah kata tidak cukup untuk alur lengkap: {kata}"
+    assert not cek_kata or 120 <= kata <= 180, f"jumlah kata di luar batas video ringkas (120-180): {kata}"
     ka = data.get("kartu_akhir") if isinstance(data.get("kartu_akhir"), dict) else {}
     waktu = str(ka.get("waktu", ""))
     waktu = waktu if re.fullmatch(r"\d{1,2}:\d{2}:\d{2}", waktu) else "02:13:00"
