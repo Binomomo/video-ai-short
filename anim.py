@@ -23,7 +23,8 @@ FONT_MONO = os.environ.get("FONT_MONO_PATH", "/usr/share/fonts/truetype/dejavu/D
 KANAL = os.environ.get("KANAL", "")          # nama akun di pojok kiri atas; kosong = tanpa tulisan
 
 LATAR = ["kamar_malam", "kamar_pagi", "dapur", "ruang_tamu", "lorong", "luar_malam", "rak_buku", "kamar_mandi", "gelap",
-         "kantor", "banjir"]
+         "kantor", "banjir", "rumah_susun", "lift", "studio_foto", "pesta", "warung", "gerbong",
+         "menara_air", "bukit_kabut", "gunung_api", "perpustakaan", "kota_futuristik", "toko_jahit"]
 SHOT = ["lebar", "sedang", "closeup", "ranjang", "cctv", "cctv_zoom"]
 EMOSI = ["netral", "senang", "kaget", "sedih", "marah", "takut", "seram"]
 EFEK = ["getar", "kedip", "glitch", "kejut"]
@@ -464,11 +465,67 @@ def latar_banjir(rng):
     return dict(bg=c.done(), dep=dep.done(), lantai=1060, amb="hangat", dep_selalu=True)
 
 
+def latar_khusus(base_fn, papan, amb, aksen):
+    """Variasi latar ringan: pakai ilustrasi dasar lalu tambahkan ciri lokasi cerita."""
+    def buat(rng):
+        env = base_fn(rng)
+        bg = env["bg"].copy()
+        d = ImageDraw.Draw(bg)
+        # papan nama kecil agar lokasi langsung terbaca tanpa menutupi karakter
+        d.rounded_rectangle((28, 90, 330, 142), radius=12, fill=(18, 22, 32), outline=aksen, width=3)
+        d.text((44, 101), papan, font=font(FONT, 22), fill=(245, 238, 220))
+        # motif sederhana khas tempat, tetap murah dirender di CPU
+        if papan == "STASIUN / GERBONG":
+            for x in (65, 245, 425, 605):
+                d.rounded_rectangle((x, 260, x+105, 430), radius=12, fill=(35, 55, 72), outline=aksen, width=5)
+                d.line((x+8, 410, x+96, 410), fill=(180, 190, 195), width=4)
+        elif papan == "LIFT RUSUN":
+            d.rectangle((500, 230, 660, 650), fill=(75, 85, 95), outline=aksen, width=7)
+            d.line((580, 235, 580, 645), fill=(190, 195, 200), width=4)
+            d.rectangle((625, 250, 648, 300), fill=(30, 35, 40), outline=aksen, width=2)
+        elif papan in ("PERPUSTAKAAN", "ARSIP FOTO"):
+            for x in (35, 185, 335, 485):
+                d.rectangle((x, 260, x+120, 690), fill=(85, 54, 38), outline=aksen, width=4)
+                for y in (330, 445, 560):
+                    d.line((x+8, y, x+112, y), fill=(190, 150, 95), width=5)
+        elif papan in ("WARUNG", "PERNIKAHAN"):
+            d.rectangle((35, 270, 685, 330), fill=(130, 45, 48), outline=aksen, width=4)
+            for x in range(60, 680, 100):
+                d.line((x, 330, x, 390), fill=aksen, width=4)
+        elif papan in ("BUKIT KABUT", "GUNUNG API"):
+            d.polygon([(0, 760), (180, 430), (350, 760)], fill=(65, 78, 80))
+            d.polygon([(260, 770), (520, 390), (720, 770)], fill=(48, 62, 65))
+            if papan == "GUNUNG API":
+                d.ellipse((470, 430, 570, 500), fill=(235, 105, 45))
+        elif papan == "MENARA AIR":
+            d.rectangle((500, 300, 640, 430), fill=(70, 100, 120), outline=aksen, width=6)
+            d.line((520, 430, 485, 780), fill=aksen, width=10); d.line((620, 430, 655, 780), fill=aksen, width=10)
+        elif papan == "KOTA MASA DEPAN":
+            for x, h in ((40,250),(170,390),(315,300),(470,470),(610,330)):
+                d.rectangle((x, 780-h, x+75, 780), fill=(30, 55, 85), outline=aksen, width=3)
+                for yy in range(800-h+25, 760, 45): d.rectangle((x+15, yy, x+28, yy+18), fill=(240, 210, 110))
+        env["bg"] = bg
+        env["amb"] = amb
+        return env
+    return buat
+
 BUAT_LATAR = {
     "kamar_malam": lambda r: latar_kamar(r, True), "kamar_pagi": lambda r: latar_kamar(r, False),
     "dapur": latar_dapur, "ruang_tamu": latar_ruang_tamu, "lorong": latar_lorong, "luar_malam": latar_luar,
     "rak_buku": latar_rak_buku, "kamar_mandi": latar_kamar_mandi, "gelap": latar_gelap,
     "kantor": latar_kantor, "banjir": latar_banjir,
+    "rumah_susun": latar_khusus(latar_lorong, "RUMAH SUSUN", "dengung", (130,150,175)),
+    "lift": latar_khusus(latar_lorong, "LIFT RUSUN", "dengung", (150,170,190)),
+    "studio_foto": latar_khusus(latar_kantor, "ARSIP FOTO", "dengung", (170,150,120)),
+    "pesta": latar_khusus(latar_ruang_tamu, "PERNIKAHAN", "ramai", (220,170,100)),
+    "warung": latar_khusus(latar_ruang_tamu, "WARUNG", "ramai", (210,150,80)),
+    "gerbong": latar_khusus(latar_lorong, "STASIUN / GERBONG", "kereta", (130,180,210)),
+    "menara_air": latar_khusus(latar_luar, "MENARA AIR", "angin", (130,180,210)),
+    "bukit_kabut": latar_khusus(latar_luar, "BUKIT KABUT", "angin", (160,175,180)),
+    "gunung_api": latar_khusus(latar_luar, "GUNUNG API", "api", (230,110,50)),
+    "perpustakaan": latar_khusus(latar_rak_buku, "PERPUSTAKAAN", "sunyi", (180,150,100)),
+    "kota_futuristik": latar_khusus(latar_luar, "KOTA MASA DEPAN", "mesin", (90,190,230)),
+    "toko_jahit": latar_khusus(latar_kantor, "TOKO JAHIT", "mesin", (190,140,120)),
 }
 _BG = {}
 
@@ -969,6 +1026,40 @@ def gambar_properti(img, daftar, t=0.0):
         elif nama == "pintu":
             d.rectangle((x-42,y-62,x+42,y+62),fill=(100,64,44),outline=(34,22,18),width=5)
             d.ellipse((x+23,y-2,x+31,y+6),fill=(220,180,80))
+        elif nama in ("payung_merah", "payung"):
+            d.pieslice((x-58,y-55,x+58,y+52), 180, 360, fill=(180,35,48), outline=outline, width=4)
+            d.line((x,y,y+72), fill=(55,48,42), width=6); d.arc((x-8,y+55,x+18,y+82), 270, 90, fill=(55,48,42), width=5)
+        elif nama in ("kamera_foto", "kamera"):
+            d.rounded_rectangle((x-58,y-36,x+58,y+38), radius=10, fill=(45,50,58), outline=(15,18,22), width=4)
+            d.rectangle((x-28,y-48,x+10,y-34), fill=(45,50,58)); d.ellipse((x-22,y-23,x+24,y+23), fill=(20,35,48), outline=(180,190,200), width=5)
+        elif nama in ("surat", "amplop"):
+            d.rectangle((x-58,y-38,x+58,y+38), fill=(238,225,190), outline=(100,75,50), width=4)
+            d.line((x-56,y-35,x,y+8,x+56,y-35), fill=(150,105,75), width=4)
+        elif nama in ("sisir", "sisir_kayu"):
+            d.rounded_rectangle((x-52,y-12,x+52,y+12), radius=5, fill=(150,92,50), outline=outline, width=3)
+            for xx in range(x-42,x+48,12): d.line((xx,y+10,xx+2,y+34), fill=(150,92,50), width=4)
+        elif nama in ("tiket", "kartu"):
+            d.rounded_rectangle((x-60,y-32,x+60,y+32), radius=6, fill=(235,220,165), outline=(70,65,50), width=4)
+            d.text((x-40,y-12), "TIKET", font=font(FONT,18), fill=(40,45,50))
+        elif nama in ("radio", "interkom"):
+            d.rounded_rectangle((x-52,y-42,x+52,y+42), radius=8, fill=(55,62,68), outline=outline, width=4)
+            d.rectangle((x-35,y-25,x+28,y+5), fill=(145,170,150)); d.ellipse((x+30,y+16,x+42,y+28), fill=(210,65,55))
+        elif nama in ("peta", "denah"):
+            d.rectangle((x-58,y-48,x+58,y+48), fill=(225,218,185), outline=(90,80,65), width=4)
+            d.line((x-40,y+25,x-5,y-18,x+22,y+12,x+45,y-28), fill=(65,105,95), width=5)
+        elif nama in ("koper", "tas"):
+            d.rounded_rectangle((x-48,y-35,x+48,y+48), radius=9, fill=(105,75,55), outline=outline, width=4)
+            d.arc((x-20,y-58,x+20,y-20), 180, 360, fill=(40,35,30), width=6)
+        elif nama in ("mesin_jahit", "alat_jahit"):
+            d.rectangle((x-52,y-20,x+52,y+35), fill=(65,75,85), outline=outline, width=4)
+            d.rectangle((x-22,y-58,x+28,y-18), fill=(90,100,110), outline=outline, width=4)
+            d.ellipse((x-8,y-10,x+24,y+22), outline=(210,210,210), width=4)
+        elif nama in ("gamelan", "gong"):
+            d.ellipse((x-48,y-48,x+48,y+48), fill=(190,145,55), outline=(75,50,25), width=5)
+            d.ellipse((x-12,y-12,x+12,y+12), fill=(105,70,30))
+        elif nama in ("lampu", "lentera"):
+            d.rounded_rectangle((x-28,y-38,x+28,y+38), radius=12, fill=(235,180,75), outline=(80,55,25), width=4)
+            d.line((x-18,y-42,x+18,y-42), fill=(70,55,40), width=5)
     return img
 
 
@@ -1173,7 +1264,10 @@ def _ffmpeg_proc(total, audio, out_path, amb, kejut, kejut_t=0.05):
         "angin": ("brown", "highpass=f=90,lowpass=f=700,volume=0.24,tremolo=f=0.18:d=0.25"),
         "hujan": ("pink", "highpass=f=450,lowpass=f=6500,volume=0.22"),
         "dengung": ("brown", "highpass=f=45,lowpass=f=420,volume=0.19,tremolo=f=2.2:d=0.12"),
-        "ramai": ("pink", "highpass=f=250,lowpass=f=1800,volume=0.13")
+        "ramai": ("pink", "highpass=f=250,lowpass=f=1800,volume=0.13"),
+        "kereta": ("brown", "highpass=f=35,lowpass=f=500,volume=0.27,tremolo=f=1.1:d=0.18"),
+        "mesin": ("brown", "highpass=f=80,lowpass=f=1200,volume=0.18,tremolo=f=3:d=0.08"),
+        "api": ("pink", "highpass=f=900,lowpass=f=5000,volume=0.15,tremolo=f=7:d=0.25")
     }
     kelas, filter_amb = profile.get(amb, profile["sunyi"])
     cmd += ["-f", "lavfi", "-t", f"{total:.3f}", "-i", f"anoisesrc=color={kelas}:amplitude=0.7:sample_rate=44100"]
