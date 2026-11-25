@@ -118,7 +118,7 @@ def atur_suara(row, nama, narator, gender, usia=None):
 
 # ================================================================ topik & state
 def baca_topik():
-    with open(TOPIK_CSV, newline="", encoding="utf-8") as f:
+    with open(TOPIK_CSV, newline="", encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
     premis, genre = {}, {}
     for r in rows:  # premis cukup ditulis di part 1; part berikutnya mewarisinya
@@ -285,7 +285,7 @@ ATURAN NARASI:
 - "pilihan": {'dua arah berbeda untuk part berikutnya yang akan dipilih penonton lewat komentar (maks 4 kata, tanpa spoiler berat)' if part < total else 'kosongkan ([])'}.
 
 ATURAN VISUAL (tiap adegan pilih dari daftar ini saja):
-- latar: {', '.join(LATAR)} (kantor = ruang kerja dengan meja; banjir = jalan kampung tergenang air; pilih yang cocok dengan ceritanya)
+- latar: {', '.join(LATAR)}. Pilih latar paling spesifik dari lokasi yang benar-benar ada di cerita; jangan gunakan latar generik bila tersedia latar khusus (misalnya rumah_susun/lift, studio_foto/pesta, warung, gerbong, menara_air, bukit_kabut/gunung_api, perpustakaan, kota_futuristik, toko_jahit).
 - shot: lebar (tokoh kecil, lihat ruangan), sedang (tokoh agak dekat), closeup (wajah penuh; untuk reaksi/ketakutan/punchline),
   ranjang (zoom ke tempat tidur; hanya di kamar_malam/kamar_pagi), cctv (tampilan kamera pengawas hijau, wajib ada
   "cctv": {{"jam": "HH:MM:SS", "kecepatan": 1 atau 16}}; jam harus naik masuk akal antar adegan cctv), cctv_zoom (wajah penuh di CCTV; pakai tokoh emosi seram).
@@ -293,12 +293,12 @@ ATURAN VISUAL (tiap adegan pilih dari daftar ini saja):
 - emosi: {', '.join(EMOSI)} ({'seram = mata menyala, hanya untuk sosok hantu/kerasukan' if genre not in TANPA_SERAM else 'pakai kaget/marah/senang/sedih/takut sesuai cerita; jangan pakai seram'})
 - efek (opsional, hemat): getar (gemetar), kedip (lampu berkedip), glitch (gangguan gambar, cocok di cctv), kejut (kilatan + dentuman, pakai maks 2 kali, untuk twist/punchline)
 - KONTINUITAS WAJIB: setiap adegan dimulai dari akibat adegan sebelumnya. Urutan harus jelas: pemicu -> reaksi -> keputusan -> tindakan -> bukti -> konsekuensi -> cliffhanger. Jangan pindah lokasi tanpa alasan yang disebutkan. Jam, posisi benda, pakaian, dan siapa yang ada di ruangan harus konsisten. Setiap adegan harus menunjukkan tindakan konkret, bukan hanya tokoh berdiri diam.
-- PROPERTI: isi "properti" dengan 0-3 benda yang benar-benar disentuh/dilihat/digunakan pada adegan itu. Nama benda pilih dari: kamera_cctv, ponsel, jam_digital, boneka_teddy, boneka_kelinci, kotak_paket, kunci, senter, foto, gelas, buku_catatan, pintu. Posisi pilih kiri/kanan/tengah. Benda yang diperkenalkan harus tetap konsisten di adegan berikutnya bila masih dipakai.
+- PROPERTI: isi "properti" dengan 0-3 benda yang benar-benar disentuh/dilihat/digunakan pada adegan itu. Nama benda pilih dari: kamera_cctv, ponsel, jam_digital, boneka_teddy, boneka_kelinci, kotak_paket, kunci, senter, foto, gelas, buku_catatan, pintu, payung_merah, kamera_foto, surat, amplop, sisir_kayu, tiket, radio, interkom, peta, denah, koper, mesin_jahit, gamelan, gong, lampu, lentera. Posisi pilih kiri/kanan/tengah. Benda yang diperkenalkan harus tetap konsisten di adegan berikutnya bila masih dipakai. Jangan menampilkan properti yang tidak disebut atau tidak masuk akal untuk adegan.
 - AKSI TOKOH: setiap objek tokoh wajib punya "aksi" singkat yang bisa digambar: diam, berjalan, menunjuk, memegang_hp, memegang_benda, menutup_mulut, meraih, melambai, gemetar, menoleh, tidur. Pilih sesuai narasi; jangan semua berdiri menghadap kamera.
 - DETAIL ADEGAN: jelaskan "aksi" tingkat adegan dalam 4-12 kata. Setiap adegan harus memvisualkan kata kerja yang benar-benar terjadi: membuka, mengangkat, menjatuhkan, menyembunyikan, berlari, mengunci, menoleh, dll. Jangan hanya mengganti ekspresi.
 - LATAR KONTEKSTUAL: pilih lokasi paling spesifik dan cocok dengan tindakan di adegan itu. Jika cerita menyebut paket datang, tampilkan teras/ruang tamu saat paket diterima; saat dibuka pindah ke meja/ruang yang sama; saat malam gunakan kamar_malam/lorong. Jangan memakai kamar_malam untuk semua adegan. Pertahankan lokasi sampai ada alasan tokoh berpindah.
 - SUARA PER ADEGAN: isi "cara_bicara" dengan salah satu: natural, berbisik, panik, teriak, menangis, tenang. Gunakan natural sebagai default. Berbisik untuk rahasia/ancaman dekat, panik untuk napas terburu-buru, teriak hanya pada momen kaget/ancaman, menangis saat sedih, tenang untuk pengakuan. Jangan membuat semua adegan horor berbisik atau berteriak.
-- SUASANA AUDIO: isi "suasana" dengan salah satu: sunyi, angin, hujan, dengung, ramai. Pilih sesuai tempat dan cuaca; misalnya hujan untuk malam badai, dengung untuk CCTV/listrik, angin untuk luar malam, ramai untuk pasar/jalan, sunyi untuk kamar tegang. Hindari suasana yang tidak sesuai visual.
+- SUASANA AUDIO: isi "suasana" dengan salah satu: sunyi, angin, hujan, dengung, ramai, kereta, mesin, api. Pilih sesuai lokasi dan kejadian: kereta untuk gerbong, mesin untuk alat/teknologi, api untuk gunung atau lentera, ramai untuk pesta/warung, angin untuk bukit/menara, dengung untuk lift/listrik, hujan saat hujan, sunyi untuk momen tegang. Hindari suasana yang tidak sesuai visual.
 - Variasikan shot: jangan sama lebih dari 3 adegan berturut-turut. {'Pakai cctv/cctv_zoom untuk adegan bukti. ' if genre not in TANPA_CCTV else 'CCTV hanya bila benar-benar cocok dengan cerita. '}Pakai closeup untuk puncak emosi.
 - "bicara" = nama tokoh yang mulutnya bergerak (narator bila ia tampil; tokoh lain bila narasi adalah ucapannya). Kosongkan jika tidak ada.
 - Konsistensi desain tokoh: tiap tokoh punya warna baju, rambut, warna kulit, dan aksesori yang tetap sama di semua adegan dan part. Jangan mengubah penampilan saat emosi berubah.
@@ -380,7 +380,9 @@ def validasi(data, st_seri, part, cek_kata=True, genre="horor"):
             bicara = None
         properti = []
         daftar_properti = {"kamera_cctv", "ponsel", "jam_digital", "boneka_teddy", "boneka_kelinci", "kotak_paket",
-                           "kunci", "senter", "foto", "gelas", "buku_catatan", "pintu"}
+                           "kunci", "senter", "foto", "gelas", "buku_catatan", "pintu", "payung_merah", "kamera_foto",
+                           "surat", "amplop", "sisir_kayu", "tiket", "radio", "interkom", "peta", "denah", "koper",
+                           "mesin_jahit", "alat_jahit", "gamelan", "gong", "lampu", "lentera", "kamera", "sisir", "tas", "kartu"}
         for pr in (b.get("properti") or [])[:3]:
             if isinstance(pr, str):
                 pr = {"nama": pr}
@@ -388,7 +390,7 @@ def validasi(data, st_seri, part, cek_kata=True, genre="horor"):
                 properti.append({"nama": pr["nama"], "posisi": pr.get("posisi") if pr.get("posisi") in ("kiri", "kanan", "tengah") else "kanan"})
         aksi_adegan = re.sub(r"\s+", " ", str(b.get("aksi") or "")).strip()[:120]
         cara = b.get("cara_bicara") if b.get("cara_bicara") in ("natural", "berbisik", "panik", "teriak", "menangis", "tenang") else "natural"
-        suasana = b.get("suasana") if b.get("suasana") in ("sunyi", "angin", "hujan", "dengung", "ramai") else ("dengung" if shot in ("cctv", "cctv_zoom") else "sunyi")
+        suasana = b.get("suasana") if b.get("suasana") in ("sunyi", "angin", "hujan", "dengung", "ramai", "kereta", "mesin", "api") else ("dengung" if shot in ("cctv", "cctv_zoom") else "sunyi")
         item = dict(narasi=narasi, latar=latar, shot=shot, tokoh=tokoh, bicara=bicara,
                     properti=properti, aksi=aksi_adegan, cara_bicara=cara, suasana=suasana,
                     efek=[e for e in (b.get("efek") or []) if e in EFEK][:3])
