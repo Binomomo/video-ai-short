@@ -38,10 +38,6 @@ jobs:
       - name: Buat dan unggah video
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          TTS_PROVIDER: ${{ vars.TTS_PROVIDER || 'edge' }} # edge atau elevenlabs
-          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-          ELEVENLABS_VOICE_ID_MALE: ${{ secrets.ELEVENLABS_VOICE_ID_MALE }}
-          ELEVENLABS_VOICE_ID_FEMALE: ${{ secrets.ELEVENLABS_VOICE_ID_FEMALE }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
