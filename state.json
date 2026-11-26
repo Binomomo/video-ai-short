@@ -23,17 +23,29 @@
         "kacamata": false,
         "warna_rambut": "hitam",
         "aksesori": ""
+      },
+      {
+        "nama": "Pak Harun",
+        "gender": "pria",
+        "usia": "tua",
+        "rambut": "botak",
+        "kulit": "sawo",
+        "baju": "cokelat",
+        "kacamata": false,
+        "warna_rambut": "abu",
+        "aksesori": ""
       }
     ],
     "ringkasan": [
       "Part 1: Reno dan adiknya Mila pindah ke rusun tua. Pada malam pertama, Reno menemukan pintu baru bernomor nol tujuh di lorong. Dari dalam pintu terdengar suara adiknya memanggil padahal adiknya tidur di kamar. Saat direkam, sosok tinggi berdiri membelakangi pintu, dan pintu misterius itu kini berpindah ke depan kamar mereka.",
       "Part 1: Reno dan Mila baru pindah ke rusun tua. Pada malam pertama jam dua malam, Reno menemukan pintu kayu misterius bernomor nol tujuh muncul di lorong. Dari balik pintu terdengar suara adiknya memanggil, namun adiknya sedang tidur di dalam unit. Saat direkam, tampak sosok misterius di baliknya dan pintu itu mendadak berpindah ke depan kamar mereka.",
-      "Part 1: Reno dan adiknya Mila baru pindah ke rusun tua. Pada malam pertama jam dua malam, Reno menemukan pintu kayu misterius bernomor nol tujuh muncul di lorong. Dari balik pintu terdengar suara adiknya memanggil, namun adiknya sedang tidur di dalam unit. Saat direkam, tampak sosok misterius di baliknya dan pintu itu mendadak berpindah ke depan kamar mereka."
+      "Part 1: Reno dan adiknya Mila baru pindah ke rusun tua. Pada malam pertama jam dua malam, Reno menemukan pintu kayu misterius bernomor nol tujuh muncul di lorong. Dari balik pintu terdengar suara adiknya memanggil, namun adiknya sedang tidur di dalam unit. Saat direkam, tampak sosok misterius di baliknya dan pintu itu mendadak berpindah ke depan kamar mereka.",
+      "Part 2: Reno mengetahui dari Pak Harun bahwa denah gedung hanya 7 lantai, namun lantai 8 muncul di lift. Nomor pintu baru selalu memuat tanggal kematian mantan penghuni. Ketika Mila mengaku pernah bermimpi tinggal di sana, interkom kamar berbunyi memutarkan suara Reno sendiri yang minta dibukakan pintu dari luar."
     ],
-    "cliffhanger": "Pintu misterius berangka nol tujuh mendadak berpindah tempat tepat berada di depan pintu kamar mereka.",
+    "cliffhanger": "Suara Reno memanggil dari interkom padahal Reno sedang berdiri di dalam kamar.",
     "pilihan": [
-      "Buka pintu nol tujuh",
-      "Kunci pintu dari dalam"
+      "Buka pintu luar",
+      "Hancurkan alat interkom"
     ]
   }
 }
